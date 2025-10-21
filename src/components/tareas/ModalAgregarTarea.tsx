@@ -1,16 +1,24 @@
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import FormularioTarea from "./FormularioTarea";
 import { useForm } from "react-hook-form";
 import type { TareaFormData } from "@/types/index";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { crearTarea } from "@/api/TareaAPI";
+import { toast } from "react-toastify";
 
 export default function ModalAgregarTarea() {
+  // Leer si modal existe
   const navegacion = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const modalTarea = queryParams.get("nuevaTarea");
   const show = modalTarea ? true : false;
+
+  // Obtener idProyecto
+  const params = useParams();
+  const idProyecto = params.idProyecto!;
 
   const valoresIniciales: TareaFormData = {
     nombre: "",
@@ -20,11 +28,33 @@ export default function ModalAgregarTarea() {
   const {
     formState: { errors },
     register,
+    reset,
     handleSubmit,
   } = useForm({ defaultValues: valoresIniciales });
 
+  const queryCliente = useQueryClient();
+
+  const { mutate } = useMutation({
+    mutationFn: crearTarea,
+    onError: (error) => {
+      toast.error(error.message);
+    },
+    onSuccess: (data) => {
+      queryCliente.invalidateQueries({
+        queryKey: ["editarProyecto", idProyecto],
+      });
+      toast.success(data);
+      reset();
+      navegacion(location.pathname, { replace: true });
+    },
+  });
+
   const handleCrearTarea = (datosFormulario: TareaFormData) => {
-    console.log(datosFormulario);
+    const data = {
+      datosFormulario,
+      idProyecto,
+    };
+    mutate(data);
   };
 
   return (
@@ -59,11 +89,11 @@ export default function ModalAgregarTarea() {
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all p-16">
-                  <Dialog.Title as="h3" className="font-black text-4xl  my-5">
+                  <Dialog.Title as="h3" className="font-black text-3xl  my-5">
                     Nueva Tarea
                   </Dialog.Title>
 
-                  <p className="text-xl font-bold">
+                  <p className="text-lg font-bold">
                     Llena el formulario y crea {""}
                     <span className="text-fuchsia-600">una tarea</span>
                   </p>
@@ -77,7 +107,7 @@ export default function ModalAgregarTarea() {
                     <input
                       className=" bg-fuchsia-600 w-full p-3 text-white uppercase font-bold hover:bg-fuchsia-700 cursor-pointer transition-colors"
                       type="submit"
-                      value="Guardar"
+                      value="Guardar tarea"
                     />
                   </form>
                 </Dialog.Panel>

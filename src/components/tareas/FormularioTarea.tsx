@@ -14,8 +14,8 @@ export default function FormularioTarea({
   return (
     <>
       <div className="flex flex-col gap-5">
-        <label className="font-normal text-2xl" htmlFor="nombre">
-          Nombre de la tarea
+        <label className="font-normal text-lg" htmlFor="nombre">
+          Nombre
         </label>
         <input
           id="nombre"
@@ -30,8 +30,8 @@ export default function FormularioTarea({
       </div>
 
       <div className="flex flex-col gap-5">
-        <label className="font-normal text-2xl" htmlFor="descripcion">
-          Descripción de la tarea
+        <label className="font-normal text-lg" htmlFor="descripcion">
+          Descripción
         </label>
         <textarea
           id="descripcion"

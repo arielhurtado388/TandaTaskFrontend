@@ -29,14 +29,14 @@ export default function DashboardVista() {
   if (data)
     return (
       <>
-        <h1 className="text-4xl font-black">Mis proyectos</h1>
-        <p className="text-xl font-light text-gray-500 mt-5">
+        <h1 className="text-3xl font-black">Mis proyectos</h1>
+        <p className="text-lg font-light text-gray-500 mt-5">
           Maneja y administra tus proyectos
         </p>
 
         <nav className="my-8">
           <Link
-            className="bg-purple-400 hover:bg-purple-500 px-10 py-3 text-white text-xl font-bold cursor-pointer transition-colors"
+            className="bg-purple-400 hover:bg-purple-500 px-10 py-3 text-white text-lg font-bold cursor-pointer transition-colors"
             to="/proyectos/crear"
           >
             Nuevo proyecto
@@ -57,11 +57,11 @@ export default function DashboardVista() {
                   <div className="min-w-0 flex-auto space-y-2">
                     <Link
                       to={`/proyectos/${proyecto._id}`}
-                      className="text-gray-600 cursor-pointer hover:underline text-3xl font-bold"
+                      className="text-gray-600 cursor-pointer hover:underline text-2xl font-bold"
                     >
                       {proyecto.nombreProyecto}
                     </Link>
-                    <p className="text-sm text-gray-400">
+                    <p className="text-sm text-gray-400 mt-2">
                       Cliente: {proyecto.nombreCliente}
                     </p>
                     <p className="text-sm text-gray-400">
