@@ -1,5 +1,25 @@
 import { z } from "zod";
 
+// Tareas
+export const estadosTareaSchema = z.enum([
+  "pendiente",
+  "enEspera",
+  "enProgreso",
+  "bajoRevision",
+  "completa",
+]);
+
+export const tareaSchema = z.object({
+  _id: z.string(),
+  nombre: z.string(),
+  descripcion: z.string(),
+  proyecto: z.string(),
+  estado: estadosTareaSchema,
+});
+
+export type Tarea = z.infer<typeof tareaSchema>;
+export type TareaFormData = Pick<Tarea, "nombre" | "descripcion">;
+
 // Proyectos
 export const proyectoSchema = z.object({
   _id: z.string(),

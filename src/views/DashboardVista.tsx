@@ -1,14 +1,28 @@
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
-import { obtenerProyectos } from "@/api/ProyectoAPI";
-import { useQuery } from "@tanstack/react-query";
+import { eliminarProyecto, obtenerProyectos } from "@/api/ProyectoAPI";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function DashboardVista() {
   const { data, isLoading } = useQuery({
     queryKey: ["proyectos"],
     queryFn: obtenerProyectos,
+  });
+
+  const queryCliente = useQueryClient();
+
+  const { mutate } = useMutation({
+    mutationFn: eliminarProyecto,
+    onError: (error) => {
+      toast.error(error.message);
+    },
+    onSuccess: (data) => {
+      queryCliente.invalidateQueries({ queryKey: ["proyectos"] });
+      toast.success(data);
+    },
   });
 
   if (isLoading) return "Cargando...";
@@ -76,7 +90,7 @@ export default function DashboardVista() {
                       <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
                         <Menu.Item>
                           <Link
-                            to={``}
+                            to={`/proyectos/${proyecto._id}`}
                             className="block px-3 py-1 text-sm leading-6 text-gray-900"
                           >
                             Ver
@@ -94,7 +108,7 @@ export default function DashboardVista() {
                           <button
                             type="button"
                             className="block px-3 py-1 text-sm leading-6 text-red-500"
-                            onClick={() => {}}
+                            onClick={() => mutate(proyecto._id)}
                           >
                             Eliminar
                           </button>
