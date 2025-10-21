@@ -1,10 +1,13 @@
 import FormularioProyecto from "@/components/proyectos/FormularioProyecto";
 import { crearProyecto } from "@/api/ProyectoAPI";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
 import type { ProyectoFormData } from "@/types/index";
 
 export default function CrearProyectoView() {
+  const navegacion = useNavigate();
   const valoresIniciales: ProyectoFormData = {
     nombreProyecto: "",
     nombreCliente: "",
@@ -17,9 +20,18 @@ export default function CrearProyectoView() {
     formState: { errors },
   } = useForm({ defaultValues: valoresIniciales });
 
-  const handleForm = (datos: ProyectoFormData) => {
-    crearProyecto(datos);
-  };
+  const { mutate } = useMutation({
+    mutationFn: crearProyecto,
+    onError: (error) => {
+      toast.error(error.message);
+    },
+    onSuccess: (data) => {
+      toast.success(data);
+      navegacion("/");
+    },
+  });
+
+  const handleForm = (datos: ProyectoFormData) => mutate(datos);
 
   return (
     <>
