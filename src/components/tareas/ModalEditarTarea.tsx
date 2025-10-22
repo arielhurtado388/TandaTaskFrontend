@@ -43,8 +43,9 @@ export default function ModalEditarTarea({
     },
     onSuccess: (data) => {
       queryCliente.invalidateQueries({
-        queryKey: ["editarProyecto", idProyecto],
+        queryKey: ["proyecto", idProyecto],
       });
+      queryCliente.invalidateQueries({ queryKey: ["tarea", idTarea] });
       toast.success(data);
       reset();
       navegacion(location.pathname, { replace: true });

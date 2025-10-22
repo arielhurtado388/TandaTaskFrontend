@@ -9,12 +9,16 @@ export const estadosTareaSchema = z.enum([
   "completa",
 ]);
 
+export type TareaEstado = z.infer<typeof estadosTareaSchema>;
+
 export const tareaSchema = z.object({
   _id: z.string(),
   nombre: z.string(),
   descripcion: z.string(),
   proyecto: z.string(),
   estado: estadosTareaSchema,
+  createdAt: z.string(),
+  updatedAt: z.string(),
 });
 
 export type Tarea = z.infer<typeof tareaSchema>;

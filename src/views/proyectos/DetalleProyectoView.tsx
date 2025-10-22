@@ -2,6 +2,7 @@ import { obtenerProyectoPorId } from "@/api/ProyectoAPI";
 import DatosEditarTarea from "@/components/tareas/DatosEditarTarea";
 import ListaTareas from "@/components/tareas/ListaTareas";
 import ModalAgregarTarea from "@/components/tareas/ModalAgregarTarea";
+import ModalDetallesTarea from "@/components/tareas/ModalDetallesTarea";
 import { useQuery } from "@tanstack/react-query";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 
@@ -41,6 +42,7 @@ export default function DetalleProyectoView() {
 
         <ModalAgregarTarea />
         <DatosEditarTarea />
+        <ModalDetallesTarea />
       </>
     );
 }

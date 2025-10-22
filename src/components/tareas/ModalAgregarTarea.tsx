@@ -41,7 +41,7 @@ export default function ModalAgregarTarea() {
     },
     onSuccess: (data) => {
       queryCliente.invalidateQueries({
-        queryKey: ["editarProyecto", idProyecto],
+        queryKey: ["proyecto", idProyecto],
       });
       toast.success(data);
       reset();

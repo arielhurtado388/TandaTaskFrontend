@@ -61,6 +61,9 @@ export default function TareaCard({ tarea }: TareaCardProps) {
                 <button
                   type="button"
                   className="block px-3 py-1 text-sm leading-6 text-gray-900"
+                  onClick={() =>
+                    navegacion(location.pathname + `?verTarea=${tarea._id}`)
+                  }
                 >
                   Ver
                 </button>

@@ -1,5 +1,6 @@
 import type { Tarea } from "@/types/index";
 import TareaCard from "./TareaCard";
+import { traduccionesEstado } from "@/locales/es";
 
 type ListaTareasProps = {
   tareas: Tarea[];
@@ -15,14 +16,6 @@ const estadoInicialGrupos: GrupoTarea = {
   enProgreso: [],
   bajoRevision: [],
   completa: [],
-};
-
-const traduccionesEstado: { [key: string]: string } = {
-  pendiente: "Pendiente",
-  enEspera: "En espera",
-  enProgreso: "En progreso",
-  bajoRevision: "En revisión",
-  completa: "Completado",
 };
 
 const estilosEstado: { [key: string]: string } = {
