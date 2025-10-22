@@ -1,5 +1,5 @@
 import { obtenerProyectoPorId } from "@/api/ProyectoAPI";
-import FormularioEditarProyecto from "@/components/proyectos/FormularioEditarProyecto";
+import DatosEditarTarea from "@/components/tareas/DatosEditarTarea";
 import ListaTareas from "@/components/tareas/ListaTareas";
 import ModalAgregarTarea from "@/components/tareas/ModalAgregarTarea";
 import { useQuery } from "@tanstack/react-query";
@@ -11,7 +11,7 @@ export default function DetalleProyectoView() {
   const idProyecto = params.idProyecto!;
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["editarProyecto", idProyecto],
+    queryKey: ["proyecto", idProyecto],
     queryFn: () => obtenerProyectoPorId(idProyecto),
     retry: false,
   });
@@ -40,6 +40,7 @@ export default function DetalleProyectoView() {
         <ListaTareas tareas={data.tareas} />
 
         <ModalAgregarTarea />
+        <DatosEditarTarea />
       </>
     );
 }

@@ -1,6 +1,10 @@
+import { eliminarTarea } from "@/api/TareaAPI";
 import type { Tarea } from "@/types/index";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Fragment } from "react/jsx-runtime";
 
 type TareaCardProps = {
@@ -8,6 +12,26 @@ type TareaCardProps = {
 };
 
 export default function TareaCard({ tarea }: TareaCardProps) {
+  const navegacion = useNavigate();
+
+  const params = useParams();
+  const idProyecto = params.idProyecto!;
+
+  const queryCliente = useQueryClient();
+
+  const { mutate } = useMutation({
+    mutationFn: eliminarTarea,
+    onError: (error) => {
+      toast.error(error.message);
+    },
+    onSuccess: (data) => {
+      queryCliente.invalidateQueries({
+        queryKey: ["proyecto", idProyecto],
+      });
+      toast.success(data);
+    },
+  });
+
   return (
     <li className="p-5 bg-white border border-slate-300 flex justify-between gap-3">
       <div className="min-w-0 flex flex-col gap-y-4">
@@ -45,6 +69,9 @@ export default function TareaCard({ tarea }: TareaCardProps) {
                 <button
                   type="button"
                   className="block px-3 py-1 text-sm leading-6 text-gray-900"
+                  onClick={() =>
+                    navegacion(location.pathname + `?editarTarea=${tarea._id}`)
+                  }
                 >
                   Editar
                 </button>
@@ -54,6 +81,7 @@ export default function TareaCard({ tarea }: TareaCardProps) {
                 <button
                   type="button"
                   className="block px-3 py-1 text-sm leading-6 text-red-500"
+                  onClick={() => mutate({ idProyecto, idTarea: tarea._id })}
                 >
                   Eliminar
                 </button>
