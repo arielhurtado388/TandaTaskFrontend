@@ -1,5 +1,23 @@
 import { z } from "zod";
 
+// Auth
+const authSchema = z.object({
+  nombre: z.string(),
+  correo: z.string().email(),
+  contrasena: z.string(),
+  contrasena_confirmacion: z.string(),
+  token: z.string(),
+});
+
+type Auth = z.infer<typeof authSchema>;
+export type FormularioUsuarioLogin = Pick<Auth, "correo" | "contrasena">;
+export type FormularioUsuarioRegistro = Pick<
+  Auth,
+  "nombre" | "correo" | "contrasena" | "contrasena_confirmacion"
+>;
+
+export type TokenConfirmacion = Pick<Auth, "token">;
+
 // Tareas
 export const estadosTareaSchema = z.enum([
   "pendiente",
