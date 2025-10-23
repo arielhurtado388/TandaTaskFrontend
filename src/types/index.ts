@@ -17,6 +17,7 @@ export type FormularioUsuarioRegistro = Pick<
 >;
 
 export type TokenConfirmacion = Pick<Auth, "token">;
+export type FormularioRequerirCodigo = Pick<Auth, "correo">;
 
 // Tareas
 export const estadosTareaSchema = z.enum([

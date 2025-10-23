@@ -8,6 +8,7 @@ import AuthLayout from "./layouts/AuthLayout";
 import LoginView from "./views/auth/LoginView";
 import RegistroView from "./views/auth/RegistroView";
 import ConfirmarCuentaView from "./views/auth/ConfirmarCuentaView";
+import RequerirCodigoView from "./views/auth/RequerirCodigoView";
 
 export default function Router() {
   return (
@@ -34,6 +35,7 @@ export default function Router() {
             path="/auth/confirmar-cuenta"
             element={<ConfirmarCuentaView />}
           />
+          <Route path="/auth/nuevo-codigo" element={<RequerirCodigoView />} />
         </Route>
       </Routes>
     </BrowserRouter>
