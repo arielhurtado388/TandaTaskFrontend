@@ -1,10 +1,12 @@
 import api from "@/lib/axios";
 import { isAxiosError } from "axios";
 import {
+  type FormularioOlvideContrasena,
   type FormularioRequerirCodigo,
   type FormularioUsuarioLogin,
   type FormularioUsuarioRegistro,
   type TokenConfirmacion,
+  type FormularioNuevaContrasena,
 } from "../types";
 
 export async function crearCuenta(datosFormulario: FormularioUsuarioRegistro) {
@@ -48,6 +50,50 @@ export async function requerirCodigo(
 export async function iniciarSesion(datosFormulario: FormularioUsuarioLogin) {
   try {
     const url = "/auth/iniciar-sesion";
+    const { data } = await api.post<string>(url, datosFormulario);
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.error);
+    }
+  }
+}
+
+export async function recuperarContrasena(
+  datosFormulario: FormularioOlvideContrasena
+) {
+  try {
+    const url = "/auth/olvide";
+    const { data } = await api.post<string>(url, datosFormulario);
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.error);
+    }
+  }
+}
+
+export async function validarToken(datosFormulario: TokenConfirmacion) {
+  try {
+    const url = "/auth/validar-token";
+    const { data } = await api.post<string>(url, datosFormulario);
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.error);
+    }
+  }
+}
+
+export async function actualizarContrasenaConToken({
+  datosFormulario,
+  token,
+}: {
+  datosFormulario: FormularioNuevaContrasena;
+  token: TokenConfirmacion["token"];
+}) {
+  try {
+    const url = `/auth/actualizar-contrasena/${token}`;
     const { data } = await api.post<string>(url, datosFormulario);
     return data;
   } catch (error) {

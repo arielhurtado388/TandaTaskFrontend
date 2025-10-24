@@ -1,56 +1,58 @@
 import { useForm } from "react-hook-form";
-import { type FormularioUsuarioLogin } from "@/types/index";
-import MensajeError from "@/components/MensajeError";
 import { Link } from "react-router-dom";
+import { type FormularioOlvideContrasena } from "../../types";
+import MensajeError from "@/components/MensajeError";
 import { useMutation } from "@tanstack/react-query";
-import { iniciarSesion } from "@/api/AuthAPI";
+import { recuperarContrasena } from "@/api/AuthAPI";
 import { toast } from "react-toastify";
 
-export default function LoginView() {
-  const valoresIniciales: FormularioUsuarioLogin = {
+export default function OlvideContrasenaView() {
+  const valoresIniciales: FormularioOlvideContrasena = {
     correo: "",
-    contrasena: "",
   };
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({ defaultValues: valoresIniciales });
 
   const { mutate } = useMutation({
-    mutationFn: iniciarSesion,
+    mutationFn: recuperarContrasena,
     onError: (error) => {
       toast.error(error.message);
     },
     onSuccess: (data) => {
       toast.success(data);
+      reset();
     },
   });
 
-  const handleLogin = (datosFormulario: FormularioUsuarioLogin) =>
+  const handleForgotPassword = (datosFormulario: FormularioOlvideContrasena) =>
     mutate(datosFormulario);
 
   return (
     <>
-      <h1 className="text-3xl font-black text-white">Iniciar sesión</h1>
+      <h1 className="text-3xl font-black text-white">
+        Reestablecer contraseña
+      </h1>
       <p className="text-lg font-light text-white mt-5">
-        Comienza a planear tus proyectos {""}
+        Coloca tu correo{""}
         <span className=" text-fuchsia-500 font-bold">
           {" "}
-          colocando tu correo y contraseña
+          y reestablece tu contraseña
         </span>
       </p>
 
       <form
-        onSubmit={handleSubmit(handleLogin)}
-        className="space-y-8 p-10 mt-10 bg-white"
+        onSubmit={handleSubmit(handleForgotPassword)}
+        className="space-y-8 p-10 mt-10  bg-white"
         noValidate
       >
         <div className="flex flex-col gap-5">
           <label className="font-normal text-lg" htmlFor="correo">
             Correo
           </label>
-
           <input
             id="correo"
             type="email"
@@ -60,7 +62,7 @@ export default function LoginView() {
               required: "El correo es obligatorio",
               pattern: {
                 value: /\S+@\S+\.\S+/,
-                message: "EL correo no es válido",
+                message: "El correo no es válido",
               },
             })}
           />
@@ -69,45 +71,26 @@ export default function LoginView() {
           )}
         </div>
 
-        <div className="flex flex-col gap-5">
-          <label className="font-normal text-lg" htmlFor="contrasena">
-            Contraseña
-          </label>
-
-          <input
-            type="password"
-            id="contrasena"
-            placeholder="Contraseña de registro"
-            className="w-full p-3  border-gray-300 border"
-            {...register("contrasena", {
-              required: "La contraseña es obligatoria",
-            })}
-          />
-          {errors.contrasena && (
-            <MensajeError>{errors.contrasena.message}</MensajeError>
-          )}
-        </div>
-
         <input
           type="submit"
-          value="Iniciar sesión"
+          value="Enviar instrucciones"
           className="bg-fuchsia-600 hover:bg-fuchsia-700 w-full p-3  text-white font-black  text-lg cursor-pointer"
         />
       </form>
 
       <nav className="mt-10 flex flex-col space-y-4">
         <Link
+          to="/auth/iniciar-sesion"
           className="text-center text-gray-300 font-normal"
-          to={"/auth/registro"}
         >
-          ¿No tienes una cuenta? Crear una
+          ¿Ya tienes una cuenta? Iniciar Sesión
         </Link>
 
         <Link
+          to="/auth/registro"
           className="text-center text-gray-300 font-normal"
-          to={"/auth/olvide"}
         >
-          ¿Olvidaste tu contraseña? Reestablecer
+          ¿No tienes una cuenta? Crear una
         </Link>
       </nav>
     </>

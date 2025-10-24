@@ -155,6 +155,13 @@ export default function RegistroView() {
         >
           ¿Ya tienes una cuenta? Iniciar sesión
         </Link>
+
+        <Link
+          className="text-center text-gray-300 font-normal"
+          to={"/auth/olvide"}
+        >
+          ¿Olvidaste tu contraseña? Reestablecer
+        </Link>
       </nav>
     </>
   );

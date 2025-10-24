@@ -9,6 +9,8 @@ import LoginView from "./views/auth/LoginView";
 import RegistroView from "./views/auth/RegistroView";
 import ConfirmarCuentaView from "./views/auth/ConfirmarCuentaView";
 import RequerirCodigoView from "./views/auth/RequerirCodigoView";
+import OlvideContrasenaView from "./views/auth/OlvideContrasenaView";
+import NuevaContrasenaView from "./views/auth/NuevaContrasenaView";
 
 export default function Router() {
   return (
@@ -36,6 +38,11 @@ export default function Router() {
             element={<ConfirmarCuentaView />}
           />
           <Route path="/auth/nuevo-codigo" element={<RequerirCodigoView />} />
+          <Route path="/auth/olvide" element={<OlvideContrasenaView />} />
+          <Route
+            path="/auth/nueva-contrasena"
+            element={<NuevaContrasenaView />}
+          />
         </Route>
       </Routes>
     </BrowserRouter>
