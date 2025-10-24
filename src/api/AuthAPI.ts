@@ -51,6 +51,7 @@ export async function iniciarSesion(datosFormulario: FormularioUsuarioLogin) {
   try {
     const url = "/auth/iniciar-sesion";
     const { data } = await api.post<string>(url, datosFormulario);
+    localStorage.setItem("AUTH_TOKEN", data);
     return data;
   } catch (error) {
     if (isAxiosError(error) && error.response) {
