@@ -82,3 +82,14 @@ export type ProyectoFormData = Pick<
   Proyecto,
   "nombreProyecto" | "nombreCliente" | "descripcion"
 >;
+
+// Equipo
+export const miembroEquipoSchema = usuarioSchema.pick({
+  _id: true,
+  nombre: true,
+  correo: true,
+});
+
+export const miembrosEquipoSchema = z.array(miembroEquipoSchema);
+export type MiembroEquipo = z.infer<typeof miembroEquipoSchema>;
+export type FormularioMiembroEquipo = Pick<MiembroEquipo, "correo">;

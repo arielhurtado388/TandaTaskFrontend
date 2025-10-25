@@ -4,7 +4,7 @@ import ListaTareas from "@/components/tareas/ListaTareas";
 import ModalAgregarTarea from "@/components/tareas/ModalAgregarTarea";
 import ModalDetallesTarea from "@/components/tareas/ModalDetallesTarea";
 import { useQuery } from "@tanstack/react-query";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 
 export default function DetalleProyectoView() {
   const navegacion = useNavigate();
@@ -36,6 +36,13 @@ export default function DetalleProyectoView() {
           >
             Agregar tarea
           </button>
+
+          <Link
+            className="bg-fuchsia-600 hover:bg-fuchsia-700 px-10 py-3 text-white text-lg font-bold cursor-pointer transition-colors "
+            to="equipo"
+          >
+            Colaboradores
+          </Link>
         </nav>
 
         <ListaTareas tareas={data.tareas} />

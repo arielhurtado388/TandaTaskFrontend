@@ -11,6 +11,7 @@ import ConfirmarCuentaView from "./views/auth/ConfirmarCuentaView";
 import RequerirCodigoView from "./views/auth/RequerirCodigoView";
 import OlvideContrasenaView from "./views/auth/OlvideContrasenaView";
 import NuevaContrasenaView from "./views/auth/NuevaContrasenaView";
+import EquipoProyectoView from "./views/proyectos/EquipoProyectoView";
 
 export default function Router() {
   return (
@@ -23,10 +24,13 @@ export default function Router() {
             path="/proyectos/:idProyecto/editar"
             element={<EditarProyectoView />}
           />
-
           <Route
             path="/proyectos/:idProyecto"
             element={<DetalleProyectoView />}
+          />
+          <Route
+            path="/proyectos/:idProyecto/equipo"
+            element={<EquipoProyectoView />}
           />
         </Route>
 
