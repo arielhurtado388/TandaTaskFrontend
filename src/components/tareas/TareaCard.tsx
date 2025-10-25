@@ -9,9 +9,10 @@ import { Fragment } from "react/jsx-runtime";
 
 type TareaCardProps = {
   tarea: Tarea;
+  puedeEditar: boolean;
 };
 
-export default function TareaCard({ tarea }: TareaCardProps) {
+export default function TareaCard({ tarea, puedeEditar }: TareaCardProps) {
   const navegacion = useNavigate();
 
   const params = useParams();
@@ -35,7 +36,13 @@ export default function TareaCard({ tarea }: TareaCardProps) {
   return (
     <li className="p-5 bg-white border border-slate-300 flex justify-between gap-3">
       <div className="min-w-0 flex flex-col gap-y-4">
-        <button className="font-bold text-slate-600 text-left" type="button">
+        <button
+          className="font-bold text-slate-600 text-left"
+          type="button"
+          onClick={() =>
+            navegacion(location.pathname + `?verTarea=${tarea._id}`)
+          }
+        >
           {tarea.nombre}
         </button>
         <p className="text-slate-500 text-xs">{tarea.descripcion}</p>
@@ -68,27 +75,34 @@ export default function TareaCard({ tarea }: TareaCardProps) {
                   Ver
                 </button>
               </Menu.Item>
-              <Menu.Item>
-                <button
-                  type="button"
-                  className="block px-3 py-1 text-sm leading-6 text-gray-900"
-                  onClick={() =>
-                    navegacion(location.pathname + `?editarTarea=${tarea._id}`)
-                  }
-                >
-                  Editar
-                </button>
-              </Menu.Item>
 
-              <Menu.Item>
-                <button
-                  type="button"
-                  className="block px-3 py-1 text-sm leading-6 text-red-500"
-                  onClick={() => mutate({ idProyecto, idTarea: tarea._id })}
-                >
-                  Eliminar
-                </button>
-              </Menu.Item>
+              {puedeEditar && (
+                <>
+                  <Menu.Item>
+                    <button
+                      type="button"
+                      className="block px-3 py-1 text-sm leading-6 text-gray-900"
+                      onClick={() =>
+                        navegacion(
+                          location.pathname + `?editarTarea=${tarea._id}`
+                        )
+                      }
+                    >
+                      Editar
+                    </button>
+                  </Menu.Item>
+
+                  <Menu.Item>
+                    <button
+                      type="button"
+                      className="block px-3 py-1 text-sm leading-6 text-red-500"
+                      onClick={() => mutate({ idProyecto, idTarea: tarea._id })}
+                    >
+                      Eliminar
+                    </button>
+                  </Menu.Item>
+                </>
+              )}
             </Menu.Items>
           </Transition>
         </Menu>

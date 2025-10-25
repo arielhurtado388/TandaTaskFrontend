@@ -5,8 +5,12 @@ import { eliminarProyecto, obtenerProyectos } from "@/api/ProyectoAPI";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useAuth } from "@/hooks/useAuth";
+import { esPropietario } from "@/utils/policies";
 
 export default function DashboardVista() {
+  const { data: usuario, isLoading: authLoading } = useAuth();
+
   const { data, isLoading } = useQuery({
     queryKey: ["proyectos"],
     queryFn: obtenerProyectos,
@@ -25,8 +29,8 @@ export default function DashboardVista() {
     },
   });
 
-  if (isLoading) return "Cargando...";
-  if (data)
+  if (isLoading && authLoading) return "Cargando...";
+  if (data && usuario)
     return (
       <>
         <h1 className="text-3xl font-black">Mis proyectos</h1>
@@ -55,6 +59,18 @@ export default function DashboardVista() {
               >
                 <div className="flex min-w-0 gap-x-4">
                   <div className="min-w-0 flex-auto space-y-2">
+                    <div className="mb-2">
+                      {esPropietario(proyecto.propietario, usuario._id) ? (
+                        <p className="font-bold text-xs uppercase bg-indigo-50 text-indigo-500 border-2 border-indigo-500 rounded-lg inline-block py-1 px-5">
+                          Propietario
+                        </p>
+                      ) : (
+                        <p className="font-bold text-xs uppercase bg-green-50 text-green-500 border-2 border-green-500 rounded-lg inline-block py-1 px-5">
+                          Colaborador
+                        </p>
+                      )}
+                    </div>
+
                     <Link
                       to={`/proyectos/${proyecto._id}`}
                       className="text-gray-600 cursor-pointer hover:underline text-2xl font-bold"
@@ -96,23 +112,28 @@ export default function DashboardVista() {
                             Ver
                           </Link>
                         </Menu.Item>
-                        <Menu.Item>
-                          <Link
-                            to={`/proyectos/${proyecto._id}/editar`}
-                            className="block px-3 py-1 text-sm leading-6 text-gray-900"
-                          >
-                            Editar
-                          </Link>
-                        </Menu.Item>
-                        <Menu.Item>
-                          <button
-                            type="button"
-                            className="block px-3 py-1 text-sm leading-6 text-red-500"
-                            onClick={() => mutate(proyecto._id)}
-                          >
-                            Eliminar
-                          </button>
-                        </Menu.Item>
+
+                        {esPropietario(proyecto.propietario, usuario._id) && (
+                          <>
+                            <Menu.Item>
+                              <Link
+                                to={`/proyectos/${proyecto._id}/editar`}
+                                className="block px-3 py-1 text-sm leading-6 text-gray-900"
+                              >
+                                Editar
+                              </Link>
+                            </Menu.Item>
+                            <Menu.Item>
+                              <button
+                                type="button"
+                                className="block px-3 py-1 text-sm leading-6 text-red-500"
+                                onClick={() => mutate(proyecto._id)}
+                              >
+                                Eliminar
+                              </button>
+                            </Menu.Item>
+                          </>
+                        )}
                       </Menu.Items>
                     </Transition>
                   </Menu>

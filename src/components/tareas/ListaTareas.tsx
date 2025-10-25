@@ -4,6 +4,7 @@ import { traduccionesEstado } from "@/locales/es";
 
 type ListaTareasProps = {
   tareas: Tarea[];
+  puedeEditar: boolean;
 };
 
 type GrupoTarea = {
@@ -26,7 +27,7 @@ const estilosEstado: { [key: string]: string } = {
   completa: "border-t-emerald-500",
 };
 
-export default function ListaTareas({ tareas }: ListaTareasProps) {
+export default function ListaTareas({ tareas, puedeEditar }: ListaTareasProps) {
   const tareasAgrupadas = tareas.reduce((acc, tarea) => {
     let grupoActual = acc[tarea.estado] ? [...acc[tarea.estado]] : [];
     grupoActual = [...grupoActual, tarea];
@@ -53,7 +54,11 @@ export default function ListaTareas({ tareas }: ListaTareasProps) {
                 </li>
               ) : (
                 tareas.map((tarea) => (
-                  <TareaCard key={tarea._id} tarea={tarea} />
+                  <TareaCard
+                    key={tarea._id}
+                    tarea={tarea}
+                    puedeEditar={puedeEditar}
+                  />
                 ))
               )}
             </ul>

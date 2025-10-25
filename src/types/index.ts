@@ -66,6 +66,7 @@ export const proyectoSchema = z.object({
   nombreProyecto: z.string(),
   nombreCliente: z.string(),
   descripcion: z.string(),
+  propietario: z.string(),
 });
 
 export const proyectoDashboardSchema = z.array(
@@ -74,6 +75,7 @@ export const proyectoDashboardSchema = z.array(
     nombreProyecto: true,
     nombreCliente: true,
     descripcion: true,
+    propietario: true,
   })
 );
 
