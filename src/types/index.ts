@@ -24,6 +24,18 @@ export type FormularioNuevaContrasena = Pick<
   "contrasena" | "contrasena_confirmacion"
 >;
 
+// Usuarios
+export const usuarioSchema = authSchema
+  .pick({
+    nombre: true,
+    correo: true,
+  })
+  .extend({
+    _id: z.string(),
+  });
+
+export type Usuario = z.infer<typeof usuarioSchema>;
+
 // Tareas
 export const estadosTareaSchema = z.enum([
   "pendiente",

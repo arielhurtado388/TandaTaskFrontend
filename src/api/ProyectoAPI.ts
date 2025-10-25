@@ -5,7 +5,6 @@ import {
   type ProyectoFormData,
 } from "../types";
 import { isAxiosError } from "axios";
-import { data } from "react-router-dom";
 
 export async function crearProyecto(datos: ProyectoFormData) {
   try {

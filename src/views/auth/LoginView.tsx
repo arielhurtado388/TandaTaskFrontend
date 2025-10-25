@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { type FormularioUsuarioLogin } from "@/types/index";
 import MensajeError from "@/components/MensajeError";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { iniciarSesion } from "@/api/AuthAPI";
 import { toast } from "react-toastify";
@@ -17,13 +17,15 @@ export default function LoginView() {
     formState: { errors },
   } = useForm({ defaultValues: valoresIniciales });
 
+  const navegacion = useNavigate();
+
   const { mutate } = useMutation({
     mutationFn: iniciarSesion,
     onError: (error) => {
       toast.error(error.message);
     },
     onSuccess: () => {
-      toast.success("Iniciando sesión...");
+      navegacion("/");
     },
   });
 

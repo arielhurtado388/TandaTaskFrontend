@@ -7,6 +7,8 @@ import {
   type FormularioUsuarioRegistro,
   type TokenConfirmacion,
   type FormularioNuevaContrasena,
+  type Usuario,
+  usuarioSchema,
 } from "../types";
 
 export async function crearCuenta(datosFormulario: FormularioUsuarioRegistro) {
@@ -97,6 +99,20 @@ export async function actualizarContrasenaConToken({
     const url = `/auth/actualizar-contrasena/${token}`;
     const { data } = await api.post<string>(url, datosFormulario);
     return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.error);
+    }
+  }
+}
+
+export async function obtenerUsuario() {
+  try {
+    const { data } = await api("/auth/usuario");
+    const respuesta = usuarioSchema.safeParse(data);
+    if (respuesta.success) {
+      return respuesta.data;
+    }
   } catch (error) {
     if (isAxiosError(error) && error.response) {
       throw new Error(error.response.data.error);
