@@ -53,6 +53,13 @@ export const tareaSchema = z.object({
   descripcion: z.string(),
   proyecto: z.string(),
   estado: estadosTareaSchema,
+  completadoPor: z.array(
+    z.object({
+      _id: z.string(),
+      usuario: usuarioSchema,
+      estado: estadosTareaSchema,
+    })
+  ),
   createdAt: z.string(),
   updatedAt: z.string(),
 });

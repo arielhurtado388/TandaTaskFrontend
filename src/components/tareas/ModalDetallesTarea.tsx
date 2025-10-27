@@ -111,6 +111,20 @@ export default function ModalDetallesTarea() {
                     <p className="text-lg text-slate-500 mb-2">
                       Descripción: {data.descripcion}
                     </p>
+
+                    <p className="text-xl text-slate-500 mb-2">
+                      Historial de cambios
+                    </p>
+                    <ul className="list-decimal ml-4">
+                      {data.completadoPor.map((logActividad) => (
+                        <li key={logActividad._id}>
+                          <span className="font-bold text-slate-600 capitalize">
+                            {traduccionesEstado[logActividad.estado]} por:
+                          </span>{" "}
+                          {logActividad.usuario.nombre}
+                        </li>
+                      ))}
+                    </ul>
                     <div className="my-5 space-y-3">
                       <label className="font-bold">Estado Actual:</label>
                       <select
