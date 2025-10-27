@@ -36,6 +36,18 @@ export const usuarioSchema = authSchema
 
 export type Usuario = z.infer<typeof usuarioSchema>;
 
+// Notas
+const notaSchema = z.object({
+  _id: z.string(),
+  contenido: z.string(),
+  creadoPor: usuarioSchema,
+  tarea: z.string(),
+  createdAt: z.string(),
+});
+
+export type Nota = z.infer<typeof notaSchema>;
+export type FormularioNota = Pick<Nota, "contenido">;
+
 // Tareas
 export const estadosTareaSchema = z.enum([
   "pendiente",
@@ -58,6 +70,11 @@ export const tareaSchema = z.object({
       _id: z.string(),
       usuario: usuarioSchema,
       estado: estadosTareaSchema,
+    })
+  ),
+  notas: z.array(
+    notaSchema.extend({
+      creadoPor: usuarioSchema,
     })
   ),
   createdAt: z.string(),

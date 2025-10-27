@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import { formatearFecha } from "@/utils/utils";
 import { traduccionesEstado } from "@/locales/es";
 import type { TareaEstado } from "@/types/index";
+import PanelNotas from "../notas/PanelNotas";
 
 export default function ModalDetallesTarea() {
   const location = useLocation();
@@ -112,19 +113,25 @@ export default function ModalDetallesTarea() {
                       Descripción: {data.descripcion}
                     </p>
 
-                    <p className="text-xl text-slate-500 mb-2">
-                      Historial de cambios
-                    </p>
-                    <ul className="list-decimal ml-4">
-                      {data.completadoPor.map((logActividad) => (
-                        <li key={logActividad._id}>
-                          <span className="font-bold text-slate-600 capitalize">
-                            {traduccionesEstado[logActividad.estado]} por:
-                          </span>{" "}
-                          {logActividad.usuario.nombre}
-                        </li>
-                      ))}
-                    </ul>
+                    {data.completadoPor.length ? (
+                      <>
+                        <p className="font-bold text-lg text-slate-600 my-5">
+                          Historial de cambios
+                        </p>
+
+                        <ul className="list-decimal ml-4">
+                          {data.completadoPor.map((logActividad) => (
+                            <li key={logActividad._id}>
+                              <span className="font-bold text-slate-600 capitalize">
+                                {traduccionesEstado[logActividad.estado]} por:
+                              </span>{" "}
+                              {logActividad.usuario.nombre}
+                            </li>
+                          ))}
+                        </ul>
+                      </>
+                    ) : null}
+
                     <div className="my-5 space-y-3">
                       <label className="font-bold">Estado Actual:</label>
                       <select
@@ -143,6 +150,8 @@ export default function ModalDetallesTarea() {
                         )}
                       </select>
                     </div>
+
+                    <PanelNotas notas={data.notas} />
                   </Dialog.Panel>
                 </Transition.Child>
               </div>
