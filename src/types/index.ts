@@ -4,6 +4,7 @@ import { z } from "zod";
 const authSchema = z.object({
   nombre: z.string(),
   correo: z.string().email(),
+  contrasena_actual: z.string(),
   contrasena: z.string(),
   contrasena_confirmacion: z.string(),
   token: z.string(),
@@ -24,6 +25,11 @@ export type FormularioNuevaContrasena = Pick<
   "contrasena" | "contrasena_confirmacion"
 >;
 
+export type FormularioActualizarContrasena = Pick<
+  Auth,
+  "contrasena_actual" | "contrasena" | "contrasena_confirmacion"
+>;
+
 // Usuarios
 export const usuarioSchema = authSchema
   .pick({
@@ -35,6 +41,7 @@ export const usuarioSchema = authSchema
   });
 
 export type Usuario = z.infer<typeof usuarioSchema>;
+export type FormularioPerfil = Pick<Usuario, "nombre" | "correo">;
 
 // Notas
 const notaSchema = z.object({

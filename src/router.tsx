@@ -12,6 +12,9 @@ import RequerirCodigoView from "./views/auth/RequerirCodigoView";
 import OlvideContrasenaView from "./views/auth/OlvideContrasenaView";
 import NuevaContrasenaView from "./views/auth/NuevaContrasenaView";
 import EquipoProyectoView from "./views/proyectos/EquipoProyectoView";
+import PerfilView from "./views/perfil/PerfilView";
+import CambiarContrasenaView from "./views/perfil/CambiarContrasenaView";
+import PerfilLayout from "./layouts/PerfilLayout";
 
 export default function Router() {
   return (
@@ -32,6 +35,14 @@ export default function Router() {
             path="/proyectos/:idProyecto/equipo"
             element={<EquipoProyectoView />}
           />
+
+          <Route element={<PerfilLayout />}>
+            <Route path="/perfil" element={<PerfilView />} />
+            <Route
+              path="/perfil/cambiar-contrasena"
+              element={<CambiarContrasenaView />}
+            />
+          </Route>
         </Route>
 
         <Route element={<AuthLayout />}>
