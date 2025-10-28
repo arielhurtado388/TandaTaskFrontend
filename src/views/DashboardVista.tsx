@@ -1,32 +1,22 @@
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
-import { eliminarProyecto, obtenerProyectos } from "@/api/ProyectoAPI";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
+import { obtenerProyectos } from "@/api/ProyectoAPI";
+import { useQuery } from "@tanstack/react-query";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { esPropietario } from "@/utils/policies";
+import ModalEliminarProyecto from "@/components/proyectos/ModalEliminarProyecto";
 
 export default function DashboardVista() {
   const { data: usuario, isLoading: authLoading } = useAuth();
 
+  const location = useLocation();
+  const navegacion = useNavigate();
+
   const { data, isLoading } = useQuery({
     queryKey: ["proyectos"],
     queryFn: obtenerProyectos,
-  });
-
-  const queryCliente = useQueryClient();
-
-  const { mutate } = useMutation({
-    mutationFn: eliminarProyecto,
-    onError: (error) => {
-      toast.error(error.message);
-    },
-    onSuccess: (data) => {
-      queryCliente.invalidateQueries({ queryKey: ["proyectos"] });
-      toast.success(data);
-    },
   });
 
   if (isLoading && authLoading) return "Cargando...";
@@ -127,7 +117,12 @@ export default function DashboardVista() {
                               <button
                                 type="button"
                                 className="block px-3 py-1 text-sm leading-6 text-red-500"
-                                onClick={() => mutate(proyecto._id)}
+                                onClick={() =>
+                                  navegacion(
+                                    location.pathname +
+                                      `?eliminarProyecto=${proyecto._id}`
+                                  )
+                                }
                               >
                                 Eliminar
                               </button>
@@ -149,6 +144,8 @@ export default function DashboardVista() {
             </Link>
           </p>
         )}
+
+        <ModalEliminarProyecto />
       </>
     );
 }

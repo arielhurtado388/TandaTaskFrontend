@@ -9,6 +9,7 @@ import {
   type FormularioNuevaContrasena,
   type Usuario,
   usuarioSchema,
+  type VerificarContrasena,
 } from "../types";
 
 export async function crearCuenta(datosFormulario: FormularioUsuarioRegistro) {
@@ -113,6 +114,20 @@ export async function obtenerUsuario() {
     if (respuesta.success) {
       return respuesta.data;
     }
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.error);
+    }
+  }
+}
+
+export async function verificarContrasena(
+  datosFormulario: VerificarContrasena
+) {
+  try {
+    const url = "/auth/verificar-contrasena";
+    const { data } = await api.post<string>(url, datosFormulario);
+    return data;
   } catch (error) {
     if (isAxiosError(error) && error.response) {
       throw new Error(error.response.data.error);

@@ -30,6 +30,8 @@ export type FormularioActualizarContrasena = Pick<
   "contrasena_actual" | "contrasena" | "contrasena_confirmacion"
 >;
 
+export type VerificarContrasena = Pick<Auth, "contrasena">;
+
 // Usuarios
 export const usuarioSchema = authSchema
   .pick({
