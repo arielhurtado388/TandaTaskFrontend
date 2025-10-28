@@ -15,6 +15,7 @@ import EquipoProyectoView from "./views/proyectos/EquipoProyectoView";
 import PerfilView from "./views/perfil/PerfilView";
 import CambiarContrasenaView from "./views/perfil/CambiarContrasenaView";
 import PerfilLayout from "./layouts/PerfilLayout";
+import NoEncontrado from "./views/404/NoEncontrado";
 
 export default function Router() {
   return (
@@ -58,6 +59,10 @@ export default function Router() {
             path="/auth/nueva-contrasena"
             element={<NuevaContrasenaView />}
           />
+        </Route>
+
+        <Route element={<AuthLayout />}>
+          <Route path="*" element={<NoEncontrado />} />
         </Route>
       </Routes>
     </BrowserRouter>
