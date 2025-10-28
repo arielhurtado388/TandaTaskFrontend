@@ -1,3 +1,3 @@
 export default function Logo() {
-  return <img src="/logo.svg" alt="Logo" />;
+  return <img src="/logo.png" alt="Logo" />;
 }
