@@ -7,7 +7,6 @@ import {
   type FormularioUsuarioRegistro,
   type TokenConfirmacion,
   type FormularioNuevaContrasena,
-  type Usuario,
   usuarioSchema,
   type VerificarContrasena,
 } from "../types";

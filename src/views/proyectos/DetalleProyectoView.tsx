@@ -1,4 +1,4 @@
-import { obtenerProyectoPorId } from "@/api/ProyectoAPI";
+import { obtenerProyectoCompleto } from "@/api/ProyectoAPI";
 import DatosEditarTarea from "@/components/tareas/DatosEditarTarea";
 import ListaTareas from "@/components/tareas/ListaTareas";
 import ModalAgregarTarea from "@/components/tareas/ModalAgregarTarea";
@@ -18,7 +18,7 @@ export default function DetalleProyectoView() {
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["proyecto", idProyecto],
-    queryFn: () => obtenerProyectoPorId(idProyecto),
+    queryFn: () => obtenerProyectoCompleto(idProyecto),
     retry: false,
   });
 

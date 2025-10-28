@@ -1,6 +1,8 @@
 import api from "@/lib/axios";
 import {
+  editarProyectoSchema,
   proyectoDashboardSchema,
+  proyectoSchema,
   type Proyecto,
   type ProyectoFormData,
 } from "../types";
@@ -34,7 +36,24 @@ export async function obtenerProyectos() {
 export async function obtenerProyectoPorId(id: Proyecto["_id"]) {
   try {
     const { data } = await api(`/proyectos/${id}`);
-    return data;
+    const respuesta = editarProyectoSchema.safeParse(data);
+    if (respuesta.success) {
+      return respuesta.data;
+    }
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.error);
+    }
+  }
+}
+
+export async function obtenerProyectoCompleto(id: Proyecto["_id"]) {
+  try {
+    const { data } = await api(`/proyectos/${id}`);
+    const respuesta = proyectoSchema.safeParse(data);
+    if (respuesta.success) {
+      return respuesta.data;
+    }
   } catch (error) {
     if (isAxiosError(error) && error.response) {
       throw new Error(error.response.data.error);

@@ -90,8 +90,16 @@ export const tareaSchema = z.object({
   updatedAt: z.string(),
 });
 
+export const tareaProyectoSchema = tareaSchema.pick({
+  _id: true,
+  nombre: true,
+  descripcion: true,
+  estado: true,
+});
+
 export type Tarea = z.infer<typeof tareaSchema>;
 export type TareaFormData = Pick<Tarea, "nombre" | "descripcion">;
+export type TareaProyecto = z.infer<typeof tareaProyectoSchema>;
 
 // Proyectos
 export const proyectoSchema = z.object({
@@ -100,6 +108,8 @@ export const proyectoSchema = z.object({
   nombreCliente: z.string(),
   descripcion: z.string(),
   propietario: z.string(),
+  tareas: z.array(tareaProyectoSchema),
+  equipo: z.array(z.string()),
 });
 
 export const proyectoDashboardSchema = z.array(
@@ -111,6 +121,12 @@ export const proyectoDashboardSchema = z.array(
     propietario: true,
   })
 );
+
+export const editarProyectoSchema = proyectoSchema.pick({
+  nombreProyecto: true,
+  nombreCliente: true,
+  descripcion: true,
+});
 
 export type Proyecto = z.infer<typeof proyectoSchema>;
 export type ProyectoFormData = Pick<

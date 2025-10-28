@@ -1,18 +1,23 @@
 import { eliminarTarea } from "@/api/TareaAPI";
-import type { Tarea } from "@/types/index";
+import type { TareaProyecto } from "@/types/index";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Fragment } from "react/jsx-runtime";
+import { useDraggable } from "@dnd-kit/core";
 
 type TareaCardProps = {
-  tarea: Tarea;
+  tarea: TareaProyecto;
   puedeEditar: boolean;
 };
 
 export default function TareaCard({ tarea, puedeEditar }: TareaCardProps) {
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id: tarea._id,
+  });
+
   const navegacion = useNavigate();
 
   const params = useParams();
@@ -33,18 +38,28 @@ export default function TareaCard({ tarea, puedeEditar }: TareaCardProps) {
     },
   });
 
+  const style = transform
+    ? {
+        transform: `translate3D(${transform.x}px, ${transform.y}px, 0`,
+        padding: "1.25rem",
+        backgroundColor: "#fff",
+        width: "300px",
+        display: "flex",
+        borderWidth: "1px",
+        borderColor: "rgb(203 213 225 / var(--tw-border-opacity))",
+      }
+    : undefined;
+
   return (
     <li className="p-5 bg-white border border-slate-300 flex justify-between gap-3">
-      <div className="min-w-0 flex flex-col gap-y-4">
-        <button
-          className="font-bold text-slate-600 text-left"
-          type="button"
-          onClick={() =>
-            navegacion(location.pathname + `?verTarea=${tarea._id}`)
-          }
-        >
-          {tarea.nombre}
-        </button>
+      <div
+        {...listeners}
+        {...attributes}
+        ref={setNodeRef}
+        style={style}
+        className="min-w-0 flex flex-col gap-y-4"
+      >
+        <p className="font-bold text-slate-600 text-left">{tarea.nombre}</p>
         <p className="text-slate-500 text-xs">{tarea.descripcion}</p>
       </div>
 

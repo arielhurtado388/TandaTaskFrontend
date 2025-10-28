@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { type FormularioUsuarioRegistro } from "@/types/index";
 import MensajeError from "@/components/MensajeError";
-import { data, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { crearCuenta } from "@/api/AuthAPI";
 import { toast } from "react-toastify";
