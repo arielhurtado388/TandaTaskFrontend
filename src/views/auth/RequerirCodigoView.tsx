@@ -35,8 +35,10 @@ export default function RequerirCodigoView() {
 
   return (
     <>
-      <h1 className="text-3xl font-black text-white">Solicitar nuevo código</h1>
-      <p className="text-lg font-light text-white mt-5">
+      <h1 className="px-8 text-3xl font-black text-white">
+        Solicitar nuevo código
+      </h1>
+      <p className="px-8 text-lg font-light text-white mt-5">
         Coloca tu correo para recibir {""}
         <span className=" text-fuchsia-500 font-bold">el código</span>
       </p>

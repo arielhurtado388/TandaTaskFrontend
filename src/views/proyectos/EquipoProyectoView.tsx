@@ -43,7 +43,7 @@ export default function EquipoProyectoView() {
           Administra el equipo de trabajo para este proyecto
         </p>
 
-        <nav className="my-5 flex gap-3">
+        <nav className="my-5 flex gap-3 text-center flex-col md:flex-row">
           <button
             className="bg-purple-400 hover:bg-purple-500 px-10 py-3 text-white text-lg font-bold cursor-pointer transition-colors "
             type="button"

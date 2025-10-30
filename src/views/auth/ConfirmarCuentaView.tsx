@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useNavigation } from "react-router-dom";
 import { PinInput, PinInputField } from "@chakra-ui/pin-input";
 import { useState } from "react";
 import type { TokenConfirmacion } from "@/types/index";
@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 
 export default function ConfirmarCuentaView() {
   const [token, setToken] = useState<TokenConfirmacion["token"]>("");
+  const navegacion = useNavigate();
 
   const { mutate } = useMutation({
     mutationFn: confirmarCuenta,
@@ -16,6 +17,7 @@ export default function ConfirmarCuentaView() {
     },
     onSuccess: (data) => {
       toast.success(data);
+      navegacion("/auth/iniciar-sesion");
     },
   });
 
@@ -28,8 +30,10 @@ export default function ConfirmarCuentaView() {
 
   return (
     <>
-      <h1 className="text-3xl font-black text-white">Confirma tu cuenta</h1>
-      <p className="text-lg font-light text-white mt-5">
+      <h1 className="px-8 text-3xl font-black text-white">
+        Confirma tu cuenta
+      </h1>
+      <p className="px-8 text-lg font-light text-white mt-5">
         Ingresa el código que recibiste {""}
         <span className=" text-fuchsia-500 font-bold"> por correo</span>
       </p>

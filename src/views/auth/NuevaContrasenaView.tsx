@@ -8,10 +8,10 @@ export default function NuevaContrasenaView() {
   const [esTokenValido, setEsTokenValido] = useState(false);
   return (
     <>
-      <h1 className="text-3xl font-black text-white">
+      <h1 className="px-8 text-3xl font-black text-white">
         Reestablecer contraseña
       </h1>
-      <p className="text-lg font-light text-white mt-5">
+      <p className="px-8 text-lg font-light text-white mt-5">
         Ingresa el código que recibiste {""}
         <span className=" text-fuchsia-500 font-bold"> por correo</span>
       </p>

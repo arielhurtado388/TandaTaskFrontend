@@ -35,17 +35,17 @@ export default function NavMenu({ nombre }: NavMenuProps) {
           <div className="w-full lg:w-56 shrink rounded-xl bg-white p-4 text-sm font-semibold leading-6 text-gray-900 shadow-lg ring-1 ring-gray-900/5">
             <p className="text-center">Hola {nombre}</p>
             <Link to="/perfil" className="block p-2 hover:text-purple-950">
-              Mi Perfil
+              Perfil
             </Link>
             <Link to="/" className="block p-2 hover:text-purple-950">
-              Mis Proyectos
+              Proyectos
             </Link>
             <button
               className="block p-2 hover:text-purple-950"
               type="button"
               onClick={logout}
             >
-              Cerrar Sesión
+              Salir
             </button>
           </div>
         </Popover.Panel>

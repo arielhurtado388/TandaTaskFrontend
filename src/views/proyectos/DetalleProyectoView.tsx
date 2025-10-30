@@ -39,7 +39,7 @@ export default function DetalleProyectoView() {
         </p>
 
         {esPropietario(data.propietario, usuario._id) && (
-          <nav className="my-5 flex gap-3">
+          <nav className="my-5 flex text-center flex-col md:flex-row gap-3">
             <button
               className="bg-purple-400 hover:bg-purple-500 px-10 py-3 text-white text-lg font-bold cursor-pointer transition-colors "
               type="button"

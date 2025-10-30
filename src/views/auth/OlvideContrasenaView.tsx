@@ -33,10 +33,10 @@ export default function OlvideContrasenaView() {
 
   return (
     <>
-      <h1 className="text-3xl font-black text-white">
+      <h1 className="px-8 text-3xl font-black text-white">
         Reestablecer contraseña
       </h1>
-      <p className="text-lg font-light text-white mt-5">
+      <p className="px-8 text-lg font-light text-white mt-5">
         Coloca tu correo{""}
         <span className=" text-fuchsia-500 font-bold">
           {" "}
